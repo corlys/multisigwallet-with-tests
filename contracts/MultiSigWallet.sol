@@ -79,7 +79,7 @@ contract MultiSigWallet {
     function submitTransaction(
         address _to,
         uint256 _value,
-        bytes memory _data
+        bytes calldata _data
     ) public onlyOwner {
         uint256 txIndex = transactions.length;
 
@@ -108,6 +108,10 @@ contract MultiSigWallet {
         isConfirmed[_txIndex][msg.sender] = true;
 
         emit ConfirmTransaction(msg.sender, _txIndex);
+    }
+    
+    function getOwnerLength() public view returns (uint256){
+        return owners.length;
     }
 
     function executeTransaction(uint256 _txIndex)
